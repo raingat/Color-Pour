@@ -51,6 +51,8 @@ public class BarDispenser : MonoBehaviour
             Destroy(liquid.gameObject);
 
             MoveLiquid();
+
+            CreateLiquid();
         }
     }
 
@@ -71,6 +73,17 @@ public class BarDispenser : MonoBehaviour
                 liquid.transform.position = _liquids[previousInstance].transform.position - _liquids[previousInstance].Height * Vector3.up;
             }
         }
+    }
+
+    private void CreateLiquid()
+    {
+        Liquid newLiquid = _liquidSpawner.Spawn();
+
+        Liquid lastLiquid = _liquids.LastOrDefault();
+
+        newLiquid.transform.position = lastLiquid.transform.position - lastLiquid.Height * Vector3.up;
+
+        _liquids.Add(newLiquid);
     }
 
     private void CreateStartCountLiquid()
