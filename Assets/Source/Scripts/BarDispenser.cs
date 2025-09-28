@@ -8,7 +8,9 @@ public class BarDispenser : MonoBehaviour
 
     [SerializeField] private Transform _exitPoint;
 
-    [SerializeField] private Valve[] _valves;
+    [SerializeField] private Container[] _containers;
+
+    [SerializeField] private Valve _valve;
 
     [SerializeField] private int _startCount;
 
@@ -21,10 +23,7 @@ public class BarDispenser : MonoBehaviour
 
     private void OnEnable()
     {
-        foreach (Valve valve in _valves)
-        {
-            valve.Pressed += TryDischargeLiquid;
-        }
+        _valve.Pressed += TryDischargeLiquid;
     }
 
     private void Start()
@@ -34,10 +33,7 @@ public class BarDispenser : MonoBehaviour
 
     private void OnDisable()
     {
-        foreach (Valve valve in _valves)
-        {
-            valve.Pressed -= TryDischargeLiquid;
-        }
+        _valve.Pressed -= TryDischargeLiquid;
     }
 
     private void TryDischargeLiquid()
@@ -46,13 +42,21 @@ public class BarDispenser : MonoBehaviour
         {
             Liquid liquid = _liquids.FirstOrDefault();
 
-            _liquids.Remove(liquid);
+            foreach (Container container in _containers)
+            {
+                if (container.IsEmpty == false)
+                {
+                    _liquids.Remove(liquid);
 
-            Destroy(liquid.gameObject);
+                    container.Fill(liquid);
 
-            MoveLiquid();
+                    MoveLiquid();
 
-            CreateLiquid();
+                    CreateLiquid();
+
+                    break;
+                }
+            }
         }
     }
 
