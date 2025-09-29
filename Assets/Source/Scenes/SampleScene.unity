@@ -300,6 +300,7 @@ GameObject:
   m_Component:
   - component: {fileID: 672252837}
   - component: {fileID: 672252836}
+  - component: {fileID: 672252838}
   m_Layer: 0
   m_Name: BarDispenser
   m_TagString: Untagged
@@ -321,11 +322,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _liquidSpawner: {fileID: 1438291913}
   _exitPoint: {fileID: 1586603243}
-  _containers:
-  - {fileID: 1131828974}
-  - {fileID: 619082331}
-  - {fileID: 1254191931}
-  _valve: {fileID: 1823164007}
   _startCount: 5
 --- !u!4 &672252837
 Transform:
@@ -347,6 +343,24 @@ Transform:
   - {fileID: 1823164011}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &672252838
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 672252835}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f9935259907ccc49980ce7e68d7875d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _valve: {fileID: 1823164007}
+  _barDispenser: {fileID: 672252836}
+  _containers:
+  - {fileID: 1131828974}
+  - {fileID: 619082331}
+  - {fileID: 1254191931}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -921,6 +935,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1678955613}
   - component: {fileID: 1678955612}
+  - component: {fileID: 1678955614}
   m_Layer: 0
   m_Name: BarDispenser
   m_TagString: Untagged
@@ -942,11 +957,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _liquidSpawner: {fileID: 445014671}
   _exitPoint: {fileID: 615894276}
-  _containers:
-  - {fileID: 1131828974}
-  - {fileID: 619082331}
-  - {fileID: 1254191931}
-  _valve: {fileID: 1600382281}
   _startCount: 5
 --- !u!4 &1678955613
 Transform:
@@ -968,6 +978,24 @@ Transform:
   - {fileID: 1600382280}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1678955614
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1678955611}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f9935259907ccc49980ce7e68d7875d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _valve: {fileID: 1600382281}
+  _barDispenser: {fileID: 1678955612}
+  _containers:
+  - {fileID: 1131828974}
+  - {fileID: 619082331}
+  - {fileID: 1254191931}
 --- !u!1 &1823164006
 GameObject:
   m_ObjectHideFlags: 0

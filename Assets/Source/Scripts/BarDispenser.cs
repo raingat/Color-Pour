@@ -8,106 +8,67 @@ public class BarDispenser : MonoBehaviour
 
     [SerializeField] private Transform _exitPoint;
 
-    [SerializeField] private Container[] _containers;
-
-    [SerializeField] private Valve _valve;
-
     [SerializeField] private int _startCount;
 
-    private List<Liquid> _liquids;
+    private DispenserPump _pump;
+
+    private Queue<Liquid> _liquids;
+
+    public bool IsEmpty => _liquids.Count <= 0;
 
     private void Awake()
     {
-        _liquids = new List<Liquid>();
-    }
-
-    private void OnEnable()
-    {
-        _valve.Pressed += TryDischargeLiquid;
+        _pump = new DispenserPump();
+        _liquids = new Queue<Liquid>();
     }
 
     private void Start()
     {
-        CreateStartCountLiquid();
+        FillFully();
     }
 
-    private void OnDisable()
+    public Liquid DischargeLiquid()
     {
-        _valve.Pressed -= TryDischargeLiquid;
-    }
+        Liquid liquid = _liquids.Dequeue();
 
-    private void TryDischargeLiquid()
-    {
-        if (_liquids.Count > 0)
-        {
-            Liquid liquid = _liquids.FirstOrDefault();
+        _pump.MoveObject(_liquids.ToList(), _exitPoint.position);
 
-            foreach (Container container in _containers)
-            {
-                if (container.IsEmpty == false)
-                {
-                    _liquids.Remove(liquid);
-
-                    container.Fill(liquid);
-
-                    MoveLiquid();
-
-                    CreateLiquid();
-
-                    break;
-                }
-            }
-        }
-    }
-
-    private void MoveLiquid()
-    {
-        for (int i = 0; i < _liquids.Count; i++)
-        {
-            Liquid liquid = _liquids[i];
-
-            if (i == 0)
-            {
-                liquid.transform.position = _exitPoint.position;
-            }
-            else
-            {
-                int previousInstance = i - 1;
-
-                liquid.transform.position = _liquids[previousInstance].transform.position - _liquids[previousInstance].Height * Vector3.up;
-            }
-        }
-    }
-
-    private void CreateLiquid()
-    {
         Liquid newLiquid = _liquidSpawner.Spawn();
 
-        Liquid lastLiquid = _liquids.LastOrDefault();
+        HandleLiquid(newLiquid);
 
-        newLiquid.transform.position = lastLiquid.transform.position - lastLiquid.Height * Vector3.up;
-
-        _liquids.Add(newLiquid);
+        return liquid;
     }
 
-    private void CreateStartCountLiquid()
+    private void HandleLiquid(Liquid liquid)
     {
+        Liquid lastLiquid = _liquids.LastOrDefault();
+
+        liquid.transform.position = lastLiquid.transform.position - lastLiquid.Height * Vector3.up;
+
+        _liquids.Enqueue(liquid);
+    }
+
+    private void FillFully()
+    {
+        Liquid lastLiquid = null;
+
         for (int i = 0; i < _startCount; i++)
         {
             Liquid liquid = _liquidSpawner.Spawn();
 
-            _liquids.Add(liquid);
-
             if (i == 0)
             {
                 liquid.transform.position = _exitPoint.position;
             }
             else
             {
-                int previousInstance = i - 1;
+                lastLiquid = _liquids.LastOrDefault();
 
-                liquid.transform.position = _liquids[previousInstance].transform.position - _liquids[previousInstance].Height * Vector3.up;
+                liquid.transform.position = lastLiquid.transform.position - lastLiquid.Height * Vector3.up;
             }
+
+            _liquids.Enqueue(liquid);
         }
     }
 }
