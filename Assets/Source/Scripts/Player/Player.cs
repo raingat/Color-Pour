@@ -16,6 +16,14 @@ public class Player : MonoBehaviour
                     valve.Press();
                 }
             }
+
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity))
+            {
+                if (hit.transform.TryGetComponent(out Container container))
+                {
+                    container.GiveAwayLiquid();
+                }
+            }
         }
     }
 }
