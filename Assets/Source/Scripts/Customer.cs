@@ -1,18 +1,23 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Customer : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    private Liquid _liquid;
+
+    public bool IsGetting => _liquid != null;
+
+    private void Update()
     {
-        
+        if (_liquid != null)
+            Destroy(gameObject, 5.0f);
     }
 
-    // Update is called once per frame
-    void Update()
+    public void SetLiquid(Liquid liquid)
     {
-        
+        _liquid = liquid;
+
+        _liquid.transform.position = transform.position;
+
+        _liquid.transform.SetParent(transform);
     }
 }
