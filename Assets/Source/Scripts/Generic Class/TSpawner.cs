@@ -1,21 +1,22 @@
 using UnityEngine;
 
-public abstract class TSpawner<T> : MonoBehaviour where T : MonoBehaviour
+public abstract class TSpawner<T> : MonoBehaviour where T : PoolObject<T>
 {
-    [SerializeField] private TPool<T> _pool;
+    [SerializeField] protected GameObject _prefab;
+
+    [SerializeField] protected int _startCount;
+
+    protected ObjectPool<T> _objectPool;
+
+    protected abstract void Awake();
 
     public T Spawn()
     {
-        T instance = _pool.Get();
+        T instance = _objectPool.Pull();
 
         HandleObject(instance);
 
         return instance;
-    }
-
-    protected virtual void ReturnToPool(T instance)
-    {
-        _pool.Return(instance);
     }
 
     protected virtual void HandleObject(T instance)

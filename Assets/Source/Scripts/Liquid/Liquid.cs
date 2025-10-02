@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Liquid : MonoBehaviour
+public class Liquid : PoolObject<Liquid>
 {
     [SerializeField] private LiquidType _type;
 
