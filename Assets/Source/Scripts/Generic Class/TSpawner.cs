@@ -2,7 +2,7 @@ using UnityEngine;
 
 public abstract class TSpawner<T> : MonoBehaviour where T : PoolObject<T>
 {
-    [SerializeField] protected GameObject _prefab;
+    [SerializeField] protected T _prefab;
 
     [SerializeField] protected int _startCount;
 
