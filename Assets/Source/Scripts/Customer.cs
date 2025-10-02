@@ -1,6 +1,4 @@
-using UnityEngine;
-
-public class Customer : MonoBehaviour
+public class Customer : PoolObject<Customer>
 {
     private Liquid _liquid;
 
